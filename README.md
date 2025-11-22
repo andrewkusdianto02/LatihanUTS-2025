@@ -14,7 +14,7 @@
 
 ## PEMBUATAN MIGRATION & SEEDER
 
-### Migration Rumah Sakit :
+### Rumah Sakit
 
 <?php
 
@@ -42,8 +42,7 @@ return new class extends Migration
     }
 };
 
-
-### Seeder Rumah Sakit :
+### Seeder Rumah Sakit
 
 <?php
 
