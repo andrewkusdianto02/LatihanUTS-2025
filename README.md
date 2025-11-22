@@ -14,7 +14,7 @@
 
 ## PEMBUATAN MIGRATION & SEEDER
 
-Migration Rumah Sakit :
+### Migration Rumah Sakit :
 
 <?php
 
@@ -43,7 +43,7 @@ return new class extends Migration
 };
 
 
-Seeder Rumah Sakit :
+### Seeder Rumah Sakit :
 
 <?php
 
@@ -63,7 +63,7 @@ class RumahSakitSeeder extends Seeder
     }
 }
 
-Migration Dokter :
+### Migration Dokter :
 
 <?php
 
@@ -95,7 +95,7 @@ return new class extends Migration
     }
 };
 
-Seeder Rumah Sakit :
+### Seeder Rumah Sakit :
 
 <?php
 
@@ -133,7 +133,7 @@ class DokterSeeder extends Seeder
     }
 }
 
-Migration PoliKLinik :
+### Migration PoliKLinik :
 
 <?php
 
@@ -163,7 +163,7 @@ return new class extends Migration
     }
 };
 
-Seeder Poliklinik :
+### Seeder Poliklinik :
 
 <?php
 
@@ -186,7 +186,7 @@ class DokterSeeder extends Seeder
     }
 }
 
-Migration jadwalpraktek :
+### Migration jadwalpraktek :
 
 <?php
 
@@ -214,7 +214,7 @@ return new class extends Migration
     }
 };
 
-Seeder jadwalpraktek :
+### Seeder jadwalpraktek :
 
 <?php
 
@@ -231,7 +231,7 @@ class JadwalPraktekSeeder extends Seeder
     }
 }
 
-Migration Pasien :
+### Migration Pasien :
 
 <?php
 
@@ -261,7 +261,7 @@ return new class extends Migration
     }
 };
 
-Seeder Pasien :
+### Seeder Pasien :
 
 <?php
 
@@ -278,7 +278,7 @@ class PasienSeeder extends Seeder
     }
 }
 
-Migration Resep :
+### Migration Resep :
 
 <?php
 
@@ -306,7 +306,7 @@ return new class extends Migration
     }
 };
 
-Seeder Resep :
+### Seeder Resep :
 
 <?php
 
@@ -323,7 +323,7 @@ class ResepSeeder extends Seeder
     }
 }
 
-Migration Kunjungan :
+### Migration Kunjungan :
 
 <?php
 
@@ -352,7 +352,7 @@ return new class extends Migration
     }
 };
 
-Seeder Kunjungan :
+### Seeder Kunjungan :
 
 <?php
 
