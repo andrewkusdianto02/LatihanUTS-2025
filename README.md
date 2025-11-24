@@ -1,49 +1,57 @@
-# UTS BASIS DATA
+# 🏥 UTS BASIS DATA — Sistem Informasi Rumah Sakit
 
-## ERD
-![Diagram - LatihanUTS](https://github.com/user-attachments/assets/b4f84d70-39a3-4abb-97ae-c0e9ed10880c)
+Project ini berisi pembuatan sistem basis data rumah sakit yang terdiri dari elemen Rumah Sakit, Dokter, Poliklinik, Jadwal Praktek, Pasien, Resep, dan Kunjungan.
+Dokumentasi ini mencakup ERD, daftar tabel, serta seluruh migration & seeder.
 
-## ELEMEN RUMAH SAKIT
-- Rumah Sakit
-- Dokter
-- PoliKLinik
-- Jadwal Praktek
-- Pasien
-- Resep
-- Kunjungan
+## 📌 ERD
 
-## PEMBUATAN MIGRATION & SEEDER
+📚 Daftar Tabel
 
-### Rumah Sakit
+Rumah Sakit
 
+Dokter
+
+Poliklinik
+
+Jadwal Praktek
+
+Pasien
+
+Resep
+
+Kunjungan
+
+## 🗂️ Migration & Seeder
+### 🏥 Rumah Sakit
+Migration: rumah_sakits
+```php
 <?php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
-
+return new class extends Migration {
     public function up(): void
     {
         Schema::create('rumah_sakits', function (Blueprint $table) {
-        $table->id();
-        $table->string('nama');
-        $table->string('alamat');
-        $table->string('telepon')->nullable();
-        $table->timestamps();
-});
-
+            $table->id();
+            $table->string('nama');
+            $table->string('alamat');
+            $table->string('telepon')->nullable();
+            $table->timestamps();
+        });
     }
+
     public function down(): void
     {
         Schema::dropIfExists('rumah_sakits');
     }
 };
+```
 
-### Seeder Rumah Sakit
-
+Seeder: rumah_sakits
+```php
 <?php
 
 namespace Database\Seeders;
@@ -61,17 +69,18 @@ class RumahSakitSeeder extends Seeder
         ]);
     }
 }
+```
 
-### Migration Dokter :
-
+### 🧑‍⚕️ Dokter
+Migration: dokters
+```php
 <?php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     public function up(): void
     {
         Schema::create('dokters', function (Blueprint $table) {
@@ -82,7 +91,9 @@ return new class extends Migration
             $table->string('nomor_telepon')->nullable();
             $table->string('email')->unique()->nullable();
 
-            $table->foreignId('rumah_sakit_id')->constrained('rumah_sakits')->onDelete('cascade');
+            $table->foreignId('rumah_sakit_id')
+                  ->constrained('rumah_sakits')
+                  ->onDelete('cascade');
 
             $table->timestamps();
         });
@@ -93,9 +104,10 @@ return new class extends Migration
         Schema::dropIfExists('dokters');
     }
 };
+```
 
-### Seeder Rumah Sakit :
-
+Seeder: DokterSeeder
+```php
 <?php
 
 namespace Database\Seeders;
@@ -115,7 +127,7 @@ class DokterSeeder extends Seeder
             return;
         }
 
-        $dataDokter = [
+        DB::table('dokters')->insert([
             [
                 'nama_dokter' => 'Dr. Budi Santoso',
                 'spesialisasi' => 'Bedah Umum',
@@ -126,22 +138,21 @@ class DokterSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-        ];
-
-        DB::table('dokters')->insert($dataDokter);
+        ]);
     }
 }
+```
 
-### Migration PoliKLinik :
-
+### 🏨 Poliklinik
+Migration: polikliniks
+```php
 <?php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     public function up(): void
     {
         Schema::create('polikliniks', function (Blueprint $table) {
@@ -150,7 +161,9 @@ return new class extends Migration
             $table->integer('lantai');
             $table->text('deskripsi')->nullable();
 
-            $table->foreignId('rumah_sakit_id')->constrained('rumah_sakits')->onDelete('cascade');
+            $table->foreignId('rumah_sakit_id')
+                  ->constrained('rumah_sakits')
+                  ->onDelete('cascade');
 
             $table->timestamps();
         });
@@ -161,9 +174,10 @@ return new class extends Migration
         Schema::dropIfExists('polikliniks');
     }
 };
+```
 
-### Seeder Poliklinik :
-
+Seeder: PoliklinikSeeder
+```php
 <?php
 
 namespace Database\Seeders;
@@ -171,50 +185,50 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class DokterSeeder extends Seeder
+class PoliklinikSeeder extends Seeder
 {
     public function run(): void
     {
-
-        DB::table('dokters')->insert([
-
-            ['poliklinik_id' => 1, 'nama' => 'Dr. Rina Sari', 'spesialisasi' => 'Pediatri', 'telepon' => '081211112222'],
-            ['poliklinik_id' => 2, 'nama' => 'Dr. Bima Sakti', 'spesialisasi' => 'Kardiologi', 'telepon' => '081233334444'],
-            ['poliklinik_id' => 3, 'nama' => 'Dr. Citra Dewi', 'spesialisasi' => 'Dokter Umum', 'telepon' => '081255556666'],
+        DB::table('polikliniks')->insert([
+            ['nama_poli' => 'Poli Anak',    'lantai' => 1, 'deskripsi' => 'Pelayanan kesehatan anak',  'rumah_sakit_id' => 1],
+            ['nama_poli' => 'Poli Jantung', 'lantai' => 2, 'deskripsi' => 'Pelayanan jantung',        'rumah_sakit_id' => 1],
+            ['nama_poli' => 'Poli Umum',    'lantai' => 1, 'deskripsi' => 'Pelayanan umum',           'rumah_sakit_id' => 2],
         ]);
     }
 }
+```
 
-### Migration jadwalpraktek :
-
+### 🕒 Jadwal Praktek
+Migration: jadwal_prakteks
+```php
 <?php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     public function up(): void
     {
         Schema::create('jadwal_prakteks', function (Blueprint $table) {
-        $table->id();
-        $table->foreignId('dokter_id')->constrained()->cascadeOnDelete();
-        $table->string('hari');
-        $table->time('jam_mulai');
-        $table->time('jam_selesai');
-        $table->timestamps();
+            $table->id();
+            $table->foreignId('dokter_id')->constrained()->cascadeOnDelete();
+            $table->string('hari');
+            $table->time('jam_mulai');
+            $table->time('jam_selesai');
+            $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('jadwalprakteks');
+        Schema::dropIfExists('jadwal_prakteks');
     }
 };
+```
 
-### Seeder jadwalpraktek :
-
+Seeder: JadwalPraktekSeeder
+```php
 <?php
 
 namespace Database\Seeders;
@@ -229,29 +243,29 @@ class JadwalPraktekSeeder extends Seeder
         JadwalPraktek::factory()->count(20)->create();
     }
 }
+```
 
-### Migration Pasien :
-
+### 🧍 Pasien
+Migration: pasiens
+```php
 <?php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     public function up(): void
     {
         Schema::create('pasiens', function (Blueprint $table) {
-        $table->id();
-        $table->string('nama');
-        $table->string('nik')->unique();
-        $table->string('alamat');
-        $table->date('tanggal_lahir');
-        $table->string('telepon')->nullable();
-        $table->timestamps();
-});
-
+            $table->id();
+            $table->string('nama');
+            $table->string('nik')->unique();
+            $table->string('alamat');
+            $table->date('tanggal_lahir');
+            $table->string('telepon')->nullable();
+            $table->timestamps();
+        });
     }
 
     public function down(): void
@@ -259,9 +273,10 @@ return new class extends Migration
         Schema::dropIfExists('pasiens');
     }
 };
+```
 
-### Seeder Pasien :
-
+Seeder: PasienSeeder
+```php
 <?php
 
 namespace Database\Seeders;
@@ -276,18 +291,18 @@ class PasienSeeder extends Seeder
         Pasien::factory()->count(20)->create();
     }
 }
+```
 
-### Migration Resep :
-
+### 💊 Resep
+Migration: reseps
+```php
 <?php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
-
+return new class extends Migration {
     public function up(): void
     {
         Schema::create('reseps', function (Blueprint $table) {
@@ -299,14 +314,15 @@ return new class extends Migration
             $table->timestamps();
         });
     }
+
     public function down(): void
     {
         Schema::dropIfExists('reseps');
     }
 };
+```
 
-### Seeder Resep :
-
+```php
 <?php
 
 namespace Database\Seeders;
@@ -321,28 +337,28 @@ class ResepSeeder extends Seeder
         Resep::factory()->count(30)->create();
     }
 }
+```
 
-### Migration Kunjungan :
-
+### 📝 Kunjungan
+Migration: kunjungans
+```php
 <?php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     public function up(): void
     {
         Schema::create('kunjungans', function (Blueprint $table) {
-        $table->id();
-        $table->foreignId('pasien_id')->constrained()->cascadeOnDelete();
-        $table->foreignId('dokter_id')->constrained()->cascadeOnDelete();
-        $table->dateTime('tanggal_kunjungan');
-        $table->text('keluhan')->nullable();
-        $table->timestamps();
-});
-
+            $table->id();
+            $table->foreignId('pasien_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('dokter_id')->constrained()->cascadeOnDelete();
+            $table->dateTime('tanggal_kunjungan');
+            $table->text('keluhan')->nullable();
+            $table->timestamps();
+        });
     }
 
     public function down(): void
@@ -350,9 +366,10 @@ return new class extends Migration
         Schema::dropIfExists('kunjungans');
     }
 };
+```
 
-### Seeder Kunjungan :
-
+Seeder: KunjunganSeeder
+```php
 <?php
 
 namespace Database\Seeders;
@@ -367,3 +384,4 @@ class KunjunganSeeder extends Seeder
         Kunjungan::factory()->count(30)->create();
     }
 }
+```
